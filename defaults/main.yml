@@ -1,1 +1,9 @@
 # Defaults variables for role debuginfod
+# This role is used to provide what's needed to host a debuginfod service that client can use to get debuginfo pkg on demand
+# It will be hosted on centos infra and co-managed with external volunteer[s]
+
+
+# Httpd settings
+debuginfod_httpd_tls: True
+debuginfod_httpd_hostname: debuginfod.centos.org
+debuginfod_httpd_dir: /var/www/debuginfod
