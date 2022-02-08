@@ -36,10 +36,34 @@
   with_items:
     - ssl-debuginfod-vhost.conf
   when: debuginfod_httpd_tls  
-   
+
+- name: selinux | enabling booleans
+  seboolean:
+    name: "{{ item }}"
+    state: True
+    persistent: yes
+  with_items:
+    - httpd_can_network_connect
+
 - name: Ensuring we have a document root for vhost
   file:
     path: "{{ debuginfod_httpd_dir }}"
     state: directory
 
+- name: Ensuring some pkgs are installed for debuginfod
+  yum:
+    name: elfutils-debuginfod
+    state: latest
 
+- name: Configuring debuginfod service
+  template:
+    src: debuginfod.cfg.j2
+    dest: /etc/sysconfig/debuginfod
+  notify:
+    - restart_debuginfod
+
+- name: Ensuring debuginfod service is running
+  service:
+    name: debuginfod
+    state: started
+    enabled: True

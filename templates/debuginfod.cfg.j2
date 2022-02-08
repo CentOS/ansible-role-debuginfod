@@ -1,0 +1,17 @@
+#
+DEBUGINFOD_PORT="8002"
+#DEBUGINFOD_VERBOSE="-v"
+
+# some common places to find trustworthy ELF/DWARF files and RPMs
+DEBUGINFOD_PATHS="--fdcache-fds=1024 -t{{ debuginfod_storage_rescan_interval }} -g604800 -c6 -vv -R {{ debuginfod_storage_path }}"
+TMPDIR="/var/tmp"
+
+# prefer reliability/durability over performance
+#DEBUGINFOD_PRAGMAS="-D 'pragma synchronous=full;'"
+
+# upstream debuginfods
+#DEBUGINFOD_URLS="http://secondhost:8002 http://thirdhost:8002"
+#DEBUGINFOD_TIMEOUT="5"
+#DEBUGINFOD_RETRY_LIMIT="2"
+#DEBUGINFOD_CACHE_DIR=""
+
