@@ -36,6 +36,8 @@
   with_items:
     - ssl-debuginfod-vhost.conf
   when: debuginfod_httpd_tls  
+  tags:
+    - httpd
 
 - name: selinux | enabling booleans
   seboolean:

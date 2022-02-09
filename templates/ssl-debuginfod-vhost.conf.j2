@@ -18,7 +18,7 @@
  # Reverse-proxy /buildid/* queries
  ProxyPassMatch "^/buildid/(.*)$" "http://localhost:{{ debuginfod_tcp_port }}/buildid/$1" {{ debuginfod_proxy_options }}
  # Reverse-proxy /metrics - without (...) grouping op, URL just gets copied
- ProxyPassMatch "^/metrics$" "http://localhost:{{ debuginfod_tcp_port }}/metrics" {{ debuginfod_proxy_options }}
+ ProxyPassMatch "^/metrics$" "http://localhost:{{ debuginfod_tcp_port }}" {{ debuginfod_proxy_options }}
  ProxyPassReverse / http://localhost:{{ debuginfod_tcp_port }}/
 	
 
