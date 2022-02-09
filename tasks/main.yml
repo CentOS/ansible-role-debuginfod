@@ -57,6 +57,35 @@
   tags:
     - httpd
 
+- block:
+    - name: Ensuring we have local path to store debuginfo pkgs
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ debuginfod_storage_path }}"
+        - "{{ debuginfod_storage_path }}/8-stream"
+        - "{{ debuginfod_storage_path }}/8-stream/8-stream"
+        - "{{ debuginfod_storage_path }}/8-stream/centos"
+        - "{{ debuginfod_storage_path }}/9-stream"
+
+    - name: Script to rsync content from origin servers
+      template:
+        src: debugpkgs-pull.j2
+        dest: /usr/libexec/centos/debugpkgs-pull
+        mode: 0750
+
+    - name: Enabling cron to pull content
+      cron:
+        name: Debuginfo pkg pull
+        job: /usr/libexec/centos/debugpkgs-pull
+        hour: '*'
+        minute: '*/15'
+        state: present
+
+  tags:
+    - content
+
 - name: Ensuring some pkgs are installed for debuginfod
   yum:
     name: elfutils-debuginfod

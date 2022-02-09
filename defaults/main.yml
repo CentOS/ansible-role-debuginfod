@@ -26,3 +26,10 @@ debuginfod_storage_path: /srv/debuginfod_store
 debuginfod_storage_rescan_interval: 3600
 debuginfod_tcp_port: 8002
 debuginfod_proxy_options: "connectiontimeout=600 timeout=600 keepalive=on nocanon"
+
+## Content pulling
+# rsync url for 8-stream and 9-stream debuginfo pkgs (different infra)
+debuginfod_rsync_8s_origin: mirror.centos.org::debug/
+debuginfod_rsync_9s_origin: mirror.stream.centos.org::debug/
+debuginfod_rsync_filter: --filter '+ *debug*.rpm' --filter '- *.rpm' --filter '- *repodata*'
+

@@ -1,0 +1,23 @@
+#! /bin/bash
+
+# This file is managed by ansible
+# Purposes: pull debuginfo pkgs through rsync for debuginfod service/cache
+
+logfile="/var/log/debuginfod-pkgs-pull.log"
+lock_file="/var/tmp/debugpkgs-pull.lck"
+
+if [ -e ${lock_file} ] ; then
+  echo "Other rsync in progress" >> $logfile 2>&1
+else
+  touch ${lock_file}
+  # Starting with 8-stream
+  # Distribution content for BaseOS/AppStream/etc
+  rsync {{ debuginfod_rsync_8s_origin }}/8-stream/ {{ debuginfod_storage_path }}/8-stream/8-stream/ -avH {{ debuginfod_rsync_filter }} >> $logfile 2>&1
+  # Now SIGs content
+  rsync {{ debuginfod_rsync_8s_origin }}/centos/8-stream/ {{ debuginfod_storage_path }}/8-stream/centos/ -avH {{ debuginfod_rsync_filter }} >> $logfile 2>&1
+
+  # Now 9-stream which has everything directly 
+  rsync {{ debuginfod_rsync_9s_origin }} {{ debuginfod_storage_path }}/9-stream/ -avH {{ debuginfod_rsync_filter }} >> $logfile 2>&1
+
+  /bin/rm ${lock_file}
+fi
