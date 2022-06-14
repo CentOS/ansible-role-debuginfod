@@ -3,7 +3,7 @@ DEBUGINFOD_PORT="8002"
 #DEBUGINFOD_VERBOSE="-v"
 
 # some common places to find trustworthy ELF/DWARF files and RPMs
-DEBUGINFOD_PATHS="--fdcache-fds=1024 -t{{ debuginfod_storage_rescan_interval }} -g604800 -c6 -vv -R {{ debuginfod_storage_path }}"
+DEBUGINFOD_PATHS="--fdcache-fds=4096 --fdcache-prefetch-fds=1024 --fdcache-prefetch-mbs=2048 -t{{ debuginfod_storage_rescan_interval }} -g604800 -c6 -vv -R {{ debuginfod_storage_path }}"
 TMPDIR="/var/tmp"
 
 # prefer reliability/durability over performance
