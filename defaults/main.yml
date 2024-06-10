@@ -28,8 +28,7 @@ debuginfod_tcp_port: 8002
 debuginfod_proxy_options: "connectiontimeout=600 timeout=600 keepalive=on nocanon"
 
 ## Content pulling
-# rsync url for 8-stream and 9-stream debuginfo pkgs (different infra)
-debuginfod_rsync_8s_origin: mirror.centos.org::debug/
-debuginfod_rsync_9s_origin: mirror.stream.centos.org::debug/
+# rsync url for stream debuginfo pkgs 
+debuginfod_rsync_origin: mirror.stream.centos.org::debug/
 debuginfod_rsync_filter: --filter '+ *debug*.rpm' --filter '- *.rpm' --filter '- *repodata*'
 
