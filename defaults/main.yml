@@ -13,7 +13,7 @@ debuginfod_httpd_index_content: |
   <div class="alert alert-success" role="alert">
   Welcome to the CentOS Debuginfod Service ! <br>
   </div>
-  This server provides ELF or DWARF debugging information, covering all packages and architectures of recent versions of CentOS Stream (Currently 8-Stream and 9-Stream). It works by periodically indexing all relevant RPMs from build systems, and extracting any needed file on the fly. Debugger-type tools automatically request files one by one. After being downloaded, each file is stored in a cache under your home directory, where the tools can immediately use it. <br><br>
+  This server provides ELF or DWARF debugging information, covering all packages and architectures of recent versions of CentOS Stream . It works by periodically indexing all relevant RPMs from build systems, and extracting any needed file on the fly. Debugger-type tools automatically request files one by one. After being downloaded, each file is stored in a cache under your home directory, where the tools can immediately use it. <br><br>
   More informations can be found on the <a href="https://fedoraproject.org/wiki/Debuginfod">dedicated Fedora wiki page</a> for how to use debuginfod, but basically using the following setting should work for CentOS systems <br><br>
   <div class="alert alert-secondary" role="alert">
    export DEBUGINFOD_URLS=https://{{ debuginfod_httpd_hostname }}/<br>
