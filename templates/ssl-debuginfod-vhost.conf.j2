@@ -17,10 +17,12 @@
  SetOutputFilter DEFLATE
  # Reverse-proxy /buildid/* queries
  ProxyPassMatch "^/buildid/(.*)$" "http://localhost:{{ debuginfod_tcp_port }}/buildid/$1" {{ debuginfod_proxy_options }}
- # Reverse-proxy /metrics - without (...) grouping op, URL just gets copied
+# Reverse-proxy /metadata - without (...) grouping op, URL just gets copied
+ ProxyPassMatch "^/metadata(.*)$" "http://localhost:{{ debuginfod_tcp_port }}/metadata$1" {{ debuginfod_proxy_options }}
+# Reverse-proxy /metrics - without (...) grouping op, URL just gets copied
  ProxyPassMatch "^/metrics$" "http://localhost:{{ debuginfod_tcp_port }}" {{ debuginfod_proxy_options }}
  ProxyPassReverse / http://localhost:{{ debuginfod_tcp_port }}/
-	
+ 
 
 
 #Directory Permissions
