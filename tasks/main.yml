@@ -5,7 +5,14 @@
     name: httpd
   vars:
     httpd_tls: "{{ debuginfod_httpd_tls }}"
-    httpd_html_autoindex_title: "CentOS Debuginfod service"
+
+- import_role:
+    name: httpd
+    tasks_from: custom-header
+  vars: 
+    - httpd_custom_header_page: "{{ debuginfod_header_page }}"
+  tags:
+    - theme
 
 - import_role:
     name: httpd
@@ -53,11 +60,12 @@
     state: directory
 
 - name: Dropping simple httpd index page
-  template:
-    src: index.html.j2
-    dest: "{{ debuginfod_httpd_dir }}/index.html"
+  shell:
+    cmd: "cat /var/www/centos-design/header-centos-debuginfod-service.html /var/www/centos-design/footer.html > index.html"
+    chdir: "{{ debuginfod_httpd_dir }}"
   tags:
     - httpd
+    - theme
 
 - block:
     - name: Ensuring we have local path to store debuginfo pkgs
